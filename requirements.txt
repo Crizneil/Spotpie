@@ -1,0 +1,11 @@
+# ==============================================================================
+# CRIZ_SPOTPIE Requirements
+# ==============================================================================
+# CRIZ_SPOTPIE is built entirely on the Python 3.10+ standard library to ensure
+# lightweight execution and instantaneous startup without external dependencies.
+#
+# Standard library modules utilized:
+# - os, sys, shutil, stat, pathlib
+# - subprocess, threading, time
+# - json, re, dataclasses, typing
+# - urllib.request, logging, argparse
