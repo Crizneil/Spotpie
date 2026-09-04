@@ -5,6 +5,7 @@ import shutil
 import tempfile
 import unittest
 from pathlib import Path
+from unittest.mock import patch
 
 from criz_spotpie.config import DEFAULT_CONFIG, Config
 
@@ -54,6 +55,24 @@ class TestConfig(unittest.TestCase):
 
         recovered = Config(config_dir=self.test_dir)
         self.assertEqual(recovered.get("app_version"), "1.0.0")
+
+    @patch("criz_spotpie.config.is_windows", return_value=True)
+    @patch("criz_spotpie.config.Path.home", return_value=Path("C:/Users/TestUser"))
+    def test_windows_config_dir(self, _mock_home, _mock_is_windows):
+        """Verify Windows config defaults to AppData/Roaming."""
+        config = Config(config_dir=None)
+        self.assertTrue(str(config.config_dir).endswith("AppData/Roaming/criz-spotpie"))
+
+
+def test_windows_launcher_script(self):
+    """Verify Windows launcher wrapper uses a .cmd file and Python entry."""
+    from criz_spotpie.installer import create_launcher_script
+
+    target = Path(tempfile.mkdtemp(prefix="criz_spotpie_win_test_"))
+    source_root = Path(__file__).resolve().parents[1]
+    ok, path = create_launcher_script(target, source_root, python_exe="python", windows=True)
+    assert ok is True
+    assert Path(path).suffix.lower() == ".cmd"
 
 
 if __name__ == "__main__":

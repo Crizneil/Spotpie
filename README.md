@@ -107,33 +107,41 @@
 
 ## Installation
 
-### User-Level Installation (Recommended)
+### Quick Install (Linux/macOS)
 
-To install `criz-spotpie` into `~/.local/bin`:
+The easiest option is the Python installer script:
 
 ```bash
 git clone https://github.com/crizneil/criz-spotpie.git
 cd criz-spotpie
+python3 scripts/install.py
+criz-spotpie
+```
+
+You can also use the shell installer if you prefer:
+
+```bash
 ./scripts/install.sh
 ```
 
-Ensure `~/.local/bin` is in your `PATH`. If it is not already, add this line to your `~/.bashrc`:
+### Quick Install (Windows)
 
-```bash
-export PATH="$HOME/.local/bin:$PATH"
-```
+From PowerShell or Command Prompt:
 
-Then reload your shell:
-
-```bash
-source ~/.bashrc
-```
-
-Now you can launch the utility from any terminal simply by running:
-
-```bash
+```powershell
+git clone https://github.com/crizneil/criz-spotpie.git
+cd criz-spotpie
+py scripts\install.py
 criz-spotpie
 ```
+
+Or run the PowerShell helper directly:
+
+```powershell
+powershell -ExecutionPolicy Bypass -File .\scripts\install.ps1
+```
+
+This installs the command into the user-level Python Scripts folder and makes it easier to run on a fresh PC.
 
 ### System-Wide Installation
 

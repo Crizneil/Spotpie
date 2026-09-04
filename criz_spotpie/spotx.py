@@ -144,10 +144,16 @@ def needs_elevation(app_path: Optional[str]) -> bool:
     """Check if write permissions to the target Spotify directory require sudo."""
     if not app_path:
         return False
+
     target = Path(app_path)
-    if not target.exists():
-        target = target.parent
-    return not os.access(target, os.W_OK)
+    try:
+        if not target.exists():
+            target = target.parent
+        if not target.exists():
+            return False
+        return not os.access(target, os.W_OK)
+    except (PermissionError, OSError):
+        return True
 
 
 def execute_spotx_setup(

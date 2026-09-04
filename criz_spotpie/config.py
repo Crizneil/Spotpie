@@ -1,12 +1,13 @@
 """
 Configuration Manager for CRIZ_SPOTPIE.
 
-Stores user settings in ~/.config/criz-spotpie/config.json with safe atomic
+Stores user settings in the standard OS-specific config directory with safe atomic
 writes and directory permission enforcement.
 """
 
 import json
 import os
+import sys
 from pathlib import Path
 from typing import Any, Dict
 
@@ -26,16 +27,31 @@ DEFAULT_CONFIG: Dict[str, Any] = {
 }
 
 
+def is_windows() -> bool:
+    """Return True when running on Windows."""
+    return os.name == "nt" or sys.platform.startswith("win")
+
+
+def default_config_dir() -> Path:
+    """Return the OS-appropriate user configuration directory for CRIZ_SPOTPIE."""
+    if is_windows():
+        appdata = os.environ.get("APPDATA")
+        if appdata:
+            return Path(appdata) / "criz-spotpie"
+        return Path.home() / "AppData" / "Roaming" / "criz-spotpie"
+
+    config_home = os.environ.get("XDG_CONFIG_HOME")
+    if config_home:
+        return Path(config_home) / "criz-spotpie"
+    return Path.home() / ".config" / "criz-spotpie"
+
+
 class Config:
     """Manages CRIZ_SPOTPIE user configuration."""
 
     def __init__(self, config_dir: Path = None):
         if config_dir is None:
-            config_home = os.environ.get("XDG_CONFIG_HOME")
-            if config_home:
-                self.config_dir = Path(config_home) / "criz-spotpie"
-            else:
-                self.config_dir = Path.home() / ".config" / "criz-spotpie"
+            self.config_dir = default_config_dir()
         else:
             self.config_dir = Path(config_dir)
 
