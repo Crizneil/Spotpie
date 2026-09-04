@@ -1,6 +1,7 @@
 """Unit tests for CRIZ_SPOTPIE command-line interface."""
 
 import io
+import subprocess
 import sys
 import unittest
 from unittest.mock import patch
@@ -43,6 +44,17 @@ class TestCLI(unittest.TestCase):
         self.assertEqual(exit_code, 0)
         output = captured.getvalue()
         self.assertIn("CRIZ_SPOTPIE STATUS", output)
+
+    def test_module_entrypoint(self):
+        """Verify the package can be launched via python -m criz_spotpie."""
+        result = subprocess.run(
+            [sys.executable, "-m", "criz_spotpie", "--version"],
+            capture_output=True,
+            text=True,
+            cwd="/home/crizneil/Documents/antigravity/Spotpie",
+        )
+        self.assertEqual(result.returncode, 0)
+        self.assertIn("CRIZ_SPOTPIE", result.stdout)
 
 
 if __name__ == "__main__":

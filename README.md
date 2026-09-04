@@ -107,41 +107,40 @@
 
 ## Installation
 
-### Quick Install (Linux/macOS)
+### Easiest Install on Any PC
 
-The easiest option is the Python installer script:
+If Python is already installed, the simplest path is:
+
+```bash
+pip install git+https://github.com/Crizneil/Spotpie.git
+criz-spotpie
+```
+
+Or from a local clone:
 
 ```bash
 git clone https://github.com/crizneil/criz-spotpie.git
 cd criz-spotpie
-python3 scripts/install.py
+python3 -m pip install .
 criz-spotpie
 ```
 
-You can also use the shell installer if you prefer:
+Windows users can use:
+
+```powershell
+py -m pip install git+https://github.com/Crizneil/Spotpie.git
+criz-spotpie
+```
+
+### Alternative quick launch
+
+If you already have the repo/folder on the machine, this also works:
 
 ```bash
-./scripts/install.sh
+python -m criz_spotpie
 ```
 
-### Quick Install (Windows)
-
-From PowerShell or Command Prompt:
-
-```powershell
-git clone https://github.com/crizneil/criz-spotpie.git
-cd criz-spotpie
-py scripts\install.py
-criz-spotpie
-```
-
-Or run the PowerShell helper directly:
-
-```powershell
-powershell -ExecutionPolicy Bypass -File .\scripts\install.ps1
-```
-
-This installs the command into the user-level Python Scripts folder and makes it easier to run on a fresh PC.
+This removes the need to remember a custom PATH or a shell wrapper.
 
 ### System-Wide Installation
 
